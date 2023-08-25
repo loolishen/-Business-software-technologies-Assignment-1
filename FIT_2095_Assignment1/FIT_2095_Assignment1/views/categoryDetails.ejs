@@ -1,32 +1,21 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <title>Sold Out Events</title>
+  <title>Category Detail</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
+    /* Your styling goes here */
   </style>
 </head>
 
 <body>
-    <h1>Sold Out Events</h1>
+    <h1>Category Detail</h1>
+    <h2>Category ID: <%= category.id %></h2>
+    <h2>Category Name: <%= category.categoryName %></h2>
+    <h2>Category Description: <%= category.categoryDescription %></h2>
+    
+    <h2>Events in this Category:</h2>
     <table>
       <tr>
-        <th>ID</th>
+        <th>Event ID</th>
         <th>Event Name</th>
         <th>Start Date Time</th>
         <th>Duration in minutes</th>
@@ -35,7 +24,6 @@
         <th>Tickets Available</th>
         <th>Ongoing</th>
         <th>Category ID</th>
-        <th>Action</th>
       </tr>
       <% for (let i = 0; i < events.length; i++) { %>
         <tr>
@@ -48,11 +36,6 @@
           <td><%= events[i].ticketsAvailable %></td>
           <td><%= events[i].isActive %></td>
           <td><%= events[i].categoryId %></td>
-          <td>
-            <div class="container m-3">
-              <a type="button" class="btn btn-primary" href='/'>View</a> <!-- remember to link it to student 1 event -->
-              </div>
-          </td>
         </tr>
       <% } %>
     </table>

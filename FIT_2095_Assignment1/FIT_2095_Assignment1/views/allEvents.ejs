@@ -49,11 +49,9 @@
           <td><%= events[i].isActive %></td>
           <td><%= events[i].categoryId %></td>
           <td>
-            <% if (events[i].capacity === 0) { %>
-              <a href="/ls/sold-out" class="btn btn-danger">Sold Out</a>
-            <% } else { %>
-              <!-- Render details or other actions -->
-            <% } %>
+            <div class="container m-3">
+              <a type="button" class="btn btn-primary" href='/'>View</a> <!-- remember to link it to student 1 event -->
+              </div>
           </td>
         </tr>
       <% } %>

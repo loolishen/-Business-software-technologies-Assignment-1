@@ -62,16 +62,31 @@ Server.get('/ls/eventOngoing', function(req, res){
 
 Server.get('/ls/event/sold-out', function(req,res){
     const fileName = "soldOutEvents";
-    const availableEvents = event.filter(event => event.capacity < 1); // Filter events with capacity < 1
+    const availableEvents = event.filter(event => event.ticketsAvailable === 1); // Filter events with capacity < 1
     res.render(fileName, { events: availableEvents });
 })
 
-Server.get('/ls/category/:categoryId', function(req,res){
+Server.get('/ls/category/:categoryId', function(req, res){
+    const categoryId = req.params.categoryId; // Get category ID from URL parameter
+    const selectedCategory = categories.find(cat => cat.id === categoryId);
+    if (selectedCategory) {
+        const eventsInCategory = event.filter(e => e.categoryId === categoryId);
+        const fileName = "categoryDetail";
+        res.render(fileName, { category: selectedCategory, events: eventsInCategory });
+    } else {
+        res.status(404).send('Category not found'); // Handle category not found
+    }
+});
 
-})
-
-Server.get('/:studentName/event/remove', (req, res) => {
-
+Server.get('/ls/event/remove', (req, res) => {
+    const eventId = req.query.id; // Get event ID from query string
+    const eventIndex = event.findIndex(e => e.id === eventId); // Find the index of the event
+    if (eventIndex !== -1) {
+        event.splice(eventIndex, 1); // Remove the event from the array
+        res.redirect('/ls/eventOngoing'); // Redirect to the "list all events" page
+    } else {
+        res.status(404).send('Event not found'); // Handle event not found
+    }
 });
 
 function IDGenerator(){
