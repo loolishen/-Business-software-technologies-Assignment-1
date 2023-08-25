@@ -36,18 +36,18 @@
         <th>Tickets Available</th>
         <th>Ongoing</th>
       </tr>
-      <% for (let i = 0; i < database.length; i++) { %>
+      <% for (let i = 0; i < events.length; i++) { %>
         <tr>
-            <td><%= database[i].id %></td>
-          <td><%= database[i].eventName %></td>
-          <td><%= database[i].startDateTime %></td>
-          <td><%= database[i].duration %></td>
-          <td><%= database[i].categoryId %></td>
-          <td><%= database[i].eventDescription %></td>
-          <td><%= database[i].eventImage %></td>
-          <td><%= database[i].capacity %></td>
-          <td><%= database[i].ticketsAvailable %></td>
-          <td><%= database[i].isActive %></td>
+            <td><%= events[i].id %></td>
+          <td><%= events[i].eventName %></td>
+          <td><%= events[i].startDateTime %></td>
+          <td><%= events[i].duration %></td>
+          <td><%= events[i].categoryId %></td>
+          <td><%= events[i].eventDescription %></td>
+          <td><%= events[i].eventImage %></td>
+          <td><%= events[i].capacity %></td>
+          <td><%= events[i].ticketsAvailable %></td>
+          <td><%= events[i].isActive %></td>
         </tr>
       <% } %>
     </table>

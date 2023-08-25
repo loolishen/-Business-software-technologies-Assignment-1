@@ -6,6 +6,8 @@ const Events = require("./models/students2");
 const ejs = require("ejs");
 const PORT_NUMBER = 8080;
 let database = []
+
+let event = []
 let Server = express();
 Server.use(express.urlencoded({ extended: true }));
 Server.use(express.static("node_modules/bootstrap/dist/css"));
@@ -49,13 +51,13 @@ Server.post('/ls/event/add', function(req, res) {
     const { eventName, startDateTime, duration, categoryId, eventDescription, eventImage, capacity, ticketsAvailable, isActive } = req.body;
     const id = IDGenerator(); // Call the IDGenerator function to get a new ID
     const newEvent = { id, eventName, startDateTime, duration, categoryId, eventDescription, eventImage, capacity, ticketsAvailable, isActive };
-    database.push(newEvent);
+    event.push(newEvent);
     res.redirect('/'); // Redirect to the eventOngoing page after adding the event
 });
 
 Server.get('/ls/eventOngoing', function(req, res){
     const fileName = "allEvents";
-    res.render(fileName, { events: database });
+    res.render(fileName, { events: event });
 })
 
 Server.get('/ls/sold-out', function(req,res){
