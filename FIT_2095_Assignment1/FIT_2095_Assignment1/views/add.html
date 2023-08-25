@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Add New Event</title>
+    </head>
+
+    <body>
+        <h1>New Event</h1>
+        <form action="/ls/event/add" method="post">
+
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" name="eventName" required><br>
+
+            <label for="startDateTime">Start Date and Time:</label>
+            <input type="datetime-local" id="startDateTime" name="startDateTime" required><br>
+
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" id="duration" name="duration" required><br>
+
+            <label for="categoryId">Category ID:</label>
+            <input type="text" id="categoryId" name="categoryId" required><br>
+
+            <label for="eventDescription">Description:</label>
+            <textarea id="eventDescription" name="eventDescription"></textarea><br>
+
+            <label for="eventImage">Image URL (940x470):</label>
+            <input type="text" id="eventImage" name="eventImage"><br>
+
+            <label for="capacity">Capacity:</label>
+            <input type="number" id="capacity" name="capacity"><br>
+
+            <label for="ticketsAvailable">Tickets Available:</label>
+            <input type="number" id="ticketsAvailable" name="ticketsAvailable"><br>
+
+            <label for="isActive">Is Active:</label>
+            <input type="checkbox" id="isActive" name="isActive" checked><br>
+
+            <button type="submit">Add Event</button>
+
+            <div class="container m-3">
+                <a type="button" class="btn btn-primary" href='/'>Back</a>
+                </h1>
+            </div>
+          </form>
+    </body>
+</html>
