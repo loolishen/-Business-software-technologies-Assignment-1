@@ -60,8 +60,10 @@ Server.get('/ls/eventOngoing', function(req, res){
     res.render(fileName, { events: event });
 })
 
-Server.get('/ls/sold-out', function(req,res){
-
+Server.get('/ls/event/sold-out', function(req,res){
+    const fileName = "soldOutEvents";
+    const availableEvents = event.filter(event => event.capacity < 1); // Filter events with capacity < 1
+    res.render(fileName, { events: availableEvents });
 })
 
 Server.get('/ls/category/:categoryId', function(req,res){
@@ -87,6 +89,5 @@ function IDGenerator(){
         const randomDigit = Math.floor(Math.random() * 10);
         result += randomDigit;
     }
-
     return result;
 }

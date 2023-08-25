@@ -1,8 +1,7 @@
-<!-- allEvents.html -->
 <!DOCTYPE html>
 <html>
 <head>
-  <title>List Events</title>
+  <title>Sold Out Events</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,8 +21,9 @@
     }
   </style>
 </head>
+
 <body>
-    <h1>List Events</h1>
+    <h1>Sold Out Events</h1>
     <table>
       <tr>
         <th>ID</th>
@@ -35,11 +35,10 @@
         <th>Tickets Available</th>
         <th>Ongoing</th>
         <th>Category ID</th>
-        <th>Action</th>
       </tr>
       <% for (let i = 0; i < events.length; i++) { %>
         <tr>
-            <td><%= events[i].id %></td>
+          <td><%= events[i].id %></td>
           <td><%= events[i].eventName %></td>
           <td><%= events[i].startDateTime %></td>
           <td><%= events[i].duration %></td>
@@ -48,18 +47,12 @@
           <td><%= events[i].ticketsAvailable %></td>
           <td><%= events[i].isActive %></td>
           <td><%= events[i].categoryId %></td>
-          <td>
-            <% if (events[i].capacity === 0) { %>
-              <a href="/ls/sold-out" class="btn btn-danger">Sold Out</a>
-            <% } else { %>
-              <!-- Render details or other actions -->
-            <% } %>
-          </td>
         </tr>
       <% } %>
     </table>
-  </body>
-  <div class="container m-3">
-    <a type="button" class="btn btn-primary" href='/'>Back</a>
+    
+    <div class="container m-3">
+      <a type="button" class="btn btn-primary" href='/'>Back</a>
     </div>
+</body>
 </html>
