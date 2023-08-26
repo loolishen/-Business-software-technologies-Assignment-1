@@ -54,6 +54,33 @@ Server.get('/search-category',function (req,res){
     const fileName =  VIEWS_PATH +"search-category.html";
     res.render(fileName, { categories: filteredCategories, keyword });
 });
+Server.get('/event-details/:eventId', function(req, res){
+    const eventId = req.params.eventId; // Get event ID from URL parameter
+    const selectedEvent = event.find(e => e.id === eventId);
+
+    if (!eventId) {
+        res.status(400).send('Event ID not provided');
+        return;
+    }
+
+    if (!selectedEvent) {
+        res.status(404).send('Event not found');
+        return;
+    }
+    // Calculate the end date/time by adding the duration to the start date/time
+    const startDateTime = new Date(selectedEvent.startDateTime);
+    const durationInMinutes = parseInt(selectedEvent.duration, 10);
+    const endDateTime = new Date(startDateTime.getTime() + durationInMinutes * 60000); // Convert minutes to milliseconds
+    const fileName = VIEWS_PATH + "event-details.html";
+    res.render(fileName, {
+        event: selectedEvent,
+        endDateTime: endDateTime
+    });
+});
+
+
+
+
 
 // LiShen's CODE
 Server.get('/ls/event/add', function (req, res) {
