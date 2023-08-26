@@ -29,6 +29,10 @@ Server.get('/output',function (req,res){
     fileName = VIEWS_PATH + "output.html";
     res.render(fileName,{records :database});
 });
+Server.get('/info',function (req,res){
+    fileName = VIEWS_PATH + "info.html";
+    res.render(fileName);
+});
 Server.get('/',function (req,res){
     fileName = VIEWS_PATH + "index.html";
     res.render(fileName);
