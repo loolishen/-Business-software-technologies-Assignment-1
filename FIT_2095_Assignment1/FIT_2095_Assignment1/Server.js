@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const VIEWS_PATH = path.join(__dirname, "/views/"); //Important
 const EventsCat = require("./models/students");
-const Events = require("./models/students2");
 const ejs = require("ejs");
 const PORT_NUMBER = 8080;
 let database = []
@@ -45,6 +44,17 @@ Server.get('/output',function (req,res){
     fileName = VIEWS_PATH + "output.html";
     res.render(fileName);
 });
+Server.get('/search-category',function (req,res){
+    const keyword = req.query.keyword || 'default';
+    if (!req.query.keyword || req.query.keyword.trim() === '') {
+        res.redirect('/search-category?keyword=' + keyword);
+        return;
+    }
+    const filteredCategories = database.filter(database => database.description.toLowerCase().includes(keyword.toLowerCase()));
+    const fileName =  VIEWS_PATH +"search-category.html";
+    res.render(fileName, { categories: filteredCategories, keyword });
+});
+
 // LiShen's CODE
 Server.get('/ls/event/add', function (req, res) {
     const fileName = VIEWS_PATH + "add.html"
