@@ -7,6 +7,9 @@ const PORT_NUMBER = 8080;
 let database = []
 
 let event = []
+
+let categories = []
+
 let Server = express();
 Server.use(express.urlencoded({ extended: true }));
 Server.use(express.static("node_modules/bootstrap/dist/css"));
@@ -93,13 +96,18 @@ Server.post('/ls/event/add', function(req, res) {
     const id = IDGenerator(); // Call the IDGenerator function to get a new ID
     const newEvent = { id, eventName, startDateTime, duration, categoryId, eventDescription, eventImage, capacity, ticketsAvailable, isActive };
     event.push(newEvent);
-    res.redirect('/'); // Redirect to the eventOngoing page after adding the event
+    res.redirect('/ls/eventOngoing'); // Redirect to the eventOngoing page after adding the event
 });
 
 Server.get('/ls/eventOngoing', function(req, res){
     const fileName = "allEvents";
     res.render(fileName, { events: event });
-})
+})  
+
+Server.get('/ls/event/details', function(req, res){
+    const fileName = "eventDetails";
+    res.render(fileName, { events: event });
+});
 
 Server.get('/ls/event/sold-out', function(req,res){
     const fileName = "soldOutEvents";
@@ -112,7 +120,7 @@ Server.get('/ls/category/:categoryId', function(req, res){
     const selectedCategory = categories.find(cat => cat.id === categoryId);
     if (selectedCategory) {
         const eventsInCategory = event.filter(e => e.categoryId === categoryId);
-        const fileName = "categoryDetail";
+        const fileName = "categoryDetails";
         res.render(fileName, { category: selectedCategory, events: eventsInCategory });
     } else {
         res.status(404).send('Category not found'); // Handle category not found
