@@ -39,7 +39,7 @@
       </tr>
       <% for (let i = 0; i < events.length; i++) { %>
         <tr>
-            <td><%= events[i].id %></td>
+          <td><%= events[i].id %></td>
           <td><%= events[i].eventName %></td>
           <td><%= events[i].startDateTime %></td>
           <td><%= events[i].duration %></td>
@@ -50,7 +50,8 @@
           <td><%= events[i].categoryId %></td>
           <td>
             <div class="container m-3">
-              <a type="button" class="btn btn-primary" href='/ls/event/details'>View</a> <!-- Update the href attribute -->              </div>
+              <a type="button" class="btn btn-primary" href='/ls/event/details/<%= events[i].id %>'>View</a>
+            </div>
           </td>
         </tr>
       <% } %>

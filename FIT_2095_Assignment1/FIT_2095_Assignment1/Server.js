@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const VIEWS_PATH = path.join(__dirname, "/views/"); //Important
 const EventsCat = require("./models/students");
+const Events = require("./models/students2")
 const ejs = require("ejs");
 const PORT_NUMBER = 8080;
 let database = []
@@ -33,7 +34,7 @@ Server.get('/info',function (req,res){
     res.render(fileName);
 });
 Server.get('/',function (req,res){
-    fileName = VIEWS_PATH + "index.html";
+    const fileName = VIEWS_PATH + "index.html";
     res.render(fileName);
 });
 Server.get('/input',function (req,res){
@@ -107,9 +108,9 @@ Server.get('/ls/event/add', function (req, res) {
 
 Server.post('/ls/event/add', function(req, res) {
     const { eventName, startDateTime, duration, categoryId, eventDescription, eventImage, capacity, ticketsAvailable, isActive } = req.body;
-    const id = IDGenerator(); // Call the IDGenerator function to get a new ID
-    const newEvent = { id, eventName, startDateTime, duration, categoryId, eventDescription, eventImage, capacity, ticketsAvailable, isActive };
+    const newEvent = new Events(id, eventName, eventDescription, startDateTime, duration, isActive, eventImage, capacity, ticketsAvailable, categoryId); // Use the Events constructor
     event.push(newEvent);
+    console.log(newEvent)
     res.redirect('/ls/eventOngoing'); // Redirect to the eventOngoing page after adding the event
 });
 
@@ -118,10 +119,11 @@ Server.get('/ls/eventOngoing', function(req, res){
     res.render(fileName, { events: event });
 })  
 
-Server.get('/ls/event/details', function(req, res){
-    const fileName = "eventDetails";
-    res.render(fileName, { events: event });
+Server.get('/ls/event/details/:eventId', function(req, res){
+
 });
+
+
 
 Server.get('/ls/event/sold-out', function(req,res){
     const fileName = "soldOutEvents";
@@ -152,22 +154,8 @@ Server.get('/ls/event/remove', (req, res) => {
     }
 });
 
-function IDGenerator(){
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = 'E';
-
-    for (let i = 0; i < 2; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters[randomIndex];
-    }
-
-    result += '-';
-
-    for (let i = 0; i < 4; i++) {
-        const randomDigit = Math.floor(Math.random() * 10);
-        result += randomDigit;
-    }
-    return result;
-
-
-}
+// Add a catch-all route to handle requests with no pathname
+Server.get('*', function(req, res) {
+    const fileName = VIEWS_PATH + "index.html"; // Assuming index.html is in the views folder
+    res.render(fileName);
+});
