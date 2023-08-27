@@ -22,6 +22,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Creation Date</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Images</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -33,7 +34,10 @@
                         <td><%= categories[i].creationDate %></td>
                         <td><%= categories[i].description %></td>
                         <td>
-                            <a href="" class="btn btn-info">View</a>
+                            <img src="/static/<%=categories[i].image%>" alt="Image">
+                        </td>
+                        <td>
+                            <a href="/ls/category/<%=categories[i].id %>" class="btn btn-info">View</a>
                         </td>
                     </tr>
                     <% } %>

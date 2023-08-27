@@ -5,11 +5,8 @@ const EventsCat = require("./models/students");
 const ejs = require("ejs");
 const PORT_NUMBER = 8080;
 let database = []
-
 let event = []
-
 let categories = []
-
 let Server = express();
 Server.use(express.urlencoded({ extended: true }));
 Server.use(express.static("node_modules/bootstrap/dist/css"));
@@ -22,7 +19,7 @@ Server.listen(PORT_NUMBER, function (){
     console.log(`Successfully initiated on port ${PORT_NUMBER}`)
 });
 Server.post('/input',function (req,res){
-    let anEvent = new EventsCat(req.body.eventName, req.body.description)
+    let anEvent = new EventsCat(req.body.eventName, req.body.description, req.body.image)
     console.log(anEvent)
     database.push(anEvent)
     res.redirect("/output")
@@ -100,7 +97,7 @@ Server.post('/delete-category', (req, res) => {
         res.status(404).json({ error: 'Category not found' });
     }
 });
-
+Server.use('/static', express.static(__dirname + '/static'));
 
 // LiShen's CODE
 Server.get('/ls/event/add', function (req, res) {
