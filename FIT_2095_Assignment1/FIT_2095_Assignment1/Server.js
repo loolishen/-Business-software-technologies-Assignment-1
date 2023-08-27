@@ -77,9 +77,26 @@ Server.get('/event-details/:eventId', function(req, res){
         endDateTime: endDateTime
     });
 });
+Server.get('/delete-category',function (req,res){
+    fileName = VIEWS_PATH + "delete-category.html";
+    res.render(fileName);
+});
+Server.post('/delete-category', (req, res) => {
+    const categoryId = req.body.categoryId;
+    const categoryIndex = database.findIndex(database => database.id === categoryId);
 
+    if (categoryIndex !== -1) {
+        // Using array slicing to remove the category
+        database = [
+            database.slice(0, categoryIndex),
+            database.slice(categoryIndex + 1)
+        ];
 
-
+        res.redirect('/output');
+    } else {
+        res.status(404).json({ error: 'Category not found' });
+    }
+});
 
 
 // LiShen's CODE
