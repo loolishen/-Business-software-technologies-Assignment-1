@@ -1,47 +1,26 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Category Detail</title>
-  <style>
-    /* Your styling goes here */
-  </style>
+    <title>Category Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
-    <h1>Category Detail</h1>
-    <h2>Category ID: <%= category.id %></h2>
-    <h2>Category Name: <%= category.categoryName %></h2>
-    <h2>Category Description: <%= category.categoryDescription %></h2>
-    
-    <h2>Events in this Category:</h2>
-    <table>
-      <tr>
-        <th>Event ID</th>
-        <th>Event Name</th>
-        <th>Start Date Time</th>
-        <th>Duration in minutes</th>
-        <th>Event Description</th>
-        <th>Capacity</th>
-        <th>Tickets Available</th>
-        <th>Ongoing</th>
-        <th>Category ID</th>
-      </tr>
-      <% for (let i = 0; i < events.length; i++) { %>
-        <tr>
-          <td><%= events[i].id %></td>
-          <td><%= events[i].eventName %></td>
-          <td><%= events[i].startDateTime %></td>
-          <td><%= events[i].duration %></td>
-          <td><%= events[i].eventDescription %></td>
-          <td><%= events[i].capacity %></td>
-          <td><%= events[i].ticketsAvailable %></td>
-          <td><%= events[i].isActive %></td>
-          <td><%= events[i].categoryId %></td>
-        </tr>
-      <% } %>
-    </table>
-    
-    <div class="container m-3">
-      <a type="button" class="btn btn-primary" href='/'>Back</a>
+    <div class="container mt-5">
+        <h2>Events in this Category:</h2>
+        <ul class="list-group">
+            <% for (let i = 0; i < event.length; i++) { %>
+            <li class="list-group-item">
+                <p>ID: <%= event[i].id %></p>
+                <p>Name: <%= event[i].eventName %></p>
+                <p>Creation Date: <%= event[i].startDateTime %></p>
+                <p>Description: <%= event[i].description %></p>
+                <img src="/static/<%= event[i].eventImage %>" alt="Image">
+            </li>
+            <% } %>
+        </ul>
+        <div class="container mt-3">
+            <a href="/" class="btn btn-primary">Back</a>
+        </div>
     </div>
 </body>
 </html>

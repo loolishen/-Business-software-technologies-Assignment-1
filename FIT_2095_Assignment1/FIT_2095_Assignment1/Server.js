@@ -7,7 +7,7 @@ const ejs = require("ejs");
 const PORT_NUMBER = 8080;
 let database = []
 let event = []
-let categories = []
+
 let Server = express();
 Server.use(express.urlencoded({ extended: true }));
 Server.use(express.static("node_modules/bootstrap/dist/css"));
@@ -108,40 +108,51 @@ Server.get('/ls/event/add', function (req, res) {
 
 Server.post('/ls/event/add', function(req, res) {
     const { eventName, startDateTime, duration, categoryId, eventDescription, eventImage, capacity, ticketsAvailable, isActive } = req.body;
-    const newEvent = new Events(id, eventName, eventDescription, startDateTime, duration, isActive, eventImage, capacity, ticketsAvailable, categoryId); // Use the Events constructor
+    const id = Events.IDGenerator(); // Call the IDGenerator function to get a new ID
+    const newEvent = { id, eventName, startDateTime, duration, categoryId, eventDescription, eventImage, capacity, ticketsAvailable, isActive };
     event.push(newEvent);
-    console.log(newEvent)
     res.redirect('/ls/eventOngoing'); // Redirect to the eventOngoing page after adding the event
-});
+})
 
 Server.get('/ls/eventOngoing', function(req, res){
     const fileName = "allEvents";
     res.render(fileName, { events: event });
 })  
 
-Server.get('/ls/event/details/:eventId', function(req, res){
+Server.get('/ls/event/details/:eventId', function(req, res) {
+    const eventId = req.params.eventId; // Get event ID from URL parameter
+    const selectedEvent = event.find(e => e.id === eventId);
 
+    if (!selectedEvent) {
+        res.status(404).send('Event not found');
+        return;
+    }
+
+    const fileName = "eventDetails"; 
+    res.render(fileName, { event: selectedEvent });
 });
 
-
-
-Server.get('/ls/event/sold-out', function(req,res){
-    const fileName = "soldOutEvents";
-    const availableEvents = event.filter(event => event.ticketsAvailable === 1); // Filter events with capacity < 1
-    res.render(fileName, { events: availableEvents });
-})
 
 Server.get('/ls/category/:categoryId', function(req, res){
-    const categoryId = req.params.categoryId; // Get category ID from URL parameter
-    const selectedCategory = categories.find(cat => cat.id === categoryId);
-    if (selectedCategory) {
-        const eventsInCategory = event.filter(e => e.categoryId === categoryId);
-        const fileName = "categoryDetails";
-        res.render(fileName, { category: selectedCategory, events: eventsInCategory });
-    } else {
-        res.status(404).send('Category not found'); // Handle category not found
-    }
+    const categoryId = req.params.categoryId;
+    const selectedEvent = database.find(e => e.id === categoryId);
+
+    // ... (other error handling code) ...
+
+    // Calculate the end date/time by adding the duration to the start date/time
+    const startDateTime = new Date(selectedEvent.startDateTime);
+    const durationInMinutes = parseInt(selectedEvent.duration, 10);
+    const endDateTime = new Date(startDateTime.getTime() + durationInMinutes * 60000);
+
+    // Pass both selectedEvent and event arrays to the template
+    const fileName = VIEWS_PATH + "categoryDetails";
+    res.render(fileName, {
+        category: selectedEvent,
+        event: database, // Pass the event array here
+        endDateTime: endDateTime
+    });
 });
+
 
 Server.get('/ls/event/remove', (req, res) => {
     const eventId = req.query.id; // Get event ID from query string
