@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>Category Detail</title>
@@ -6,21 +5,24 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Events in this Category:</h2>
+        <h1 class="mb-4">Category Detail</h1>
         <ul class="list-group">
-            <% for (let i = 0; i < event.length; i++) { %>
             <li class="list-group-item">
-                <p>ID: <%= event[i].id %></p>
-                <p>Name: <%= event[i].eventName %></p>
-                <p>Creation Date: <%= event[i].startDateTime %></p>
-                <p>Description: <%= event[i].description %></p>
-                <img src="/static/<%= event[i].eventImage %>" alt="Image">
+                <strong>Category ID:</strong> <%= event.id %>
             </li>
-            <% } %>
+            <li class="list-group-item">
+                <strong>Event Name:</strong> <%= event.name %>
+            </li>
+            <li class="list-group-item">
+                <strong>Description:</strong> <%= event.description %>
+            </li>
+            <li class="list-group-item">
+                <strong>Start Date Time:</strong> <%= endDateTimes.toLocaleString() %>
+            </li>
         </ul>
-        <div class="container mt-3">
-            <a href="/" class="btn btn-primary">Back</a>
-        </div>
+
+      
+        <a href="/" class="btn btn-secondary mt-3">Back</a>
     </div>
 </body>
 </html>

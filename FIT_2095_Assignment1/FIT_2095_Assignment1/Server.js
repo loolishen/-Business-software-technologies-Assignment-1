@@ -135,24 +135,24 @@ Server.get('/ls/event/details/:eventId', function(req, res) {
 
 Server.get('/ls/category/:categoryId', function(req, res){
     const categoryId = req.params.categoryId;
-    const selectedEvent = database.find(e => e.id === categoryId);
+    const selectedCategory = database.find(cat => cat.id === categoryId); // Find the selected category
 
-    // ... (other error handling code) ...
+    if (!selectedCategory) {
+        res.status(404).send('Category not found');
+        return;
+    }
 
     // Calculate the end date/time by adding the duration to the start date/time
-    const startDateTime = new Date(selectedEvent.startDateTime);
-    const durationInMinutes = parseInt(selectedEvent.duration, 10);
-    const endDateTime = new Date(startDateTime.getTime() + durationInMinutes * 60000);
+    const startDateTime = new Date(selectedCategory.startDateTime);
+    const durationInMinutes = parseInt(selectedCategory.duration, 10);
+    const endDateTime = new Date(startDateTime.getTime() + durationInMinutes * 60000); // Convert minutes to milliseconds
 
-    // Pass both selectedEvent and event arrays to the template
-    const fileName = VIEWS_PATH + "categoryDetails";
+    const fileName = 'categoryDetails';
     res.render(fileName, {
-        category: selectedEvent,
-        event: database, // Pass the event array here
-        endDateTime: endDateTime
+        event: selectedCategory,
+        endDateTimes: endDateTime
     });
 });
-
 
 Server.get('/ls/event/remove', (req, res) => {
     const eventId = req.query.id; // Get event ID from query string
