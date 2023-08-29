@@ -125,7 +125,7 @@ Server.get('/ls/eventOngoing', function(req, res){
 
 Server.get('/ls/event/sold-out', function(req,res){
     const fileName = "soldOutEvents";
-    const availableEvents = event.filter(event => event.ticketsAvailable === 1); // Filter events with capacity < 1
+    const availableEvents = event.filter(event => event.ticketsAvailable < 1); // Filter events with capacity < 1
     res.render(fileName, { events: availableEvents });
 })
 
