@@ -101,11 +101,14 @@ Server.post('/delete-category', (req, res) => {
 Server.use('/static', express.static(__dirname + '/static'));
 
 // LiShen's CODE
+
+// Display the form for adding an event
 Server.get('/ls/event/add', function (req, res) {
     const fileName = VIEWS_PATH + "add.html"
     res.sendFile(fileName)
 });
 
+// Handle POST request for adding an event
 Server.post('/ls/event/add', function(req, res) {
     const { eventName, startDateTime, duration, categoryId, eventDescription, eventImage, capacity, ticketsAvailable, isActive } = req.body;
     const id = Events.IDGenerator(); // Call the IDGenerator function to get a new ID
@@ -114,11 +117,13 @@ Server.post('/ls/event/add', function(req, res) {
     res.redirect('/ls/eventOngoing'); // Redirect to the eventOngoing page after adding the event
 })
 
+// Display all ongoing events
 Server.get('/ls/eventOngoing', function(req, res){
     const fileName = "allEvents";
-    res.render(fileName, { events: event });
-})  
+    res.render(fileName, { events: event }); // Pass the event array to the template
+})   
 
+// Handle routes for event details and category details
 Server.get('/ls/event/details/:eventId', function(req, res) {
     const eventId = req.params.eventId; // Get event ID from URL parameter
     const selectedEvent = event.find(e => e.id === eventId);
@@ -154,6 +159,7 @@ Server.get('/ls/category/:categoryId', function(req, res){
     });
 });
 
+// Remove an event from the event array
 Server.get('/ls/event/remove', (req, res) => {
     const eventId = req.query.id; // Get event ID from query string
     const eventIndex = event.findIndex(e => e.id === eventId); // Find the index of the event
@@ -167,6 +173,6 @@ Server.get('/ls/event/remove', (req, res) => {
 
 // Add a catch-all route to handle requests with no pathname
 Server.get('*', function(req, res) {
-    const fileName = VIEWS_PATH + "index.html"; // Assuming index.html is in the views folder
+    const fileName = VIEWS_PATH + "index.html";
     res.render(fileName);
 });
