@@ -123,6 +123,12 @@ Server.get('/ls/eventOngoing', function(req, res){
     res.render(fileName, { events: event }); // Pass the event array to the template
 })   
 
+Server.get('/ls/event/sold-out', function(req,res){
+    const fileName = "soldOutEvents";
+    const availableEvents = event.filter(event => event.ticketsAvailable === 1); // Filter events with capacity < 1
+    res.render(fileName, { events: availableEvents });
+})
+
 // Handle routes for event details and category details
 Server.get('/ls/event/details/:eventId', function(req, res) {
     const eventId = req.params.eventId; // Get event ID from URL parameter
